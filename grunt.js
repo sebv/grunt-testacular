@@ -15,34 +15,65 @@ module.exports = function(grunt) {
       tasks: 'default'
     },
     testacularServer: {
-      unit: {
+      simple: {
         configFile: 'test/testacular.conf.js',
         options: {
           keepalive: true
         }
       },
-      sync: {
-        configFile: 'test/testacular.conf.js'
+      optional_single: {
+        configFile: 'test/testacular.conf.js',
+        singleRun: true,
+        options: {
+          keepalive: true,
+          success: 'success',
+          failure: 'failure',
+          always: 'always'
+        }
+      },
+      optional: {
+        configFile: 'test/testacular.conf.js',
+        options: {
+          keepalive: true
+        }
       }
     },
     testacularRun: {
-      unit: {
+      simple: {
         runnerPort: 9101
+      },
+      optional: {
+        runnerPort: 9101,
+        options: {
+          success: 'success',
+          failure: 'failure',
+          always: 'always'
+        }
       }
-    }    
+    }
   });
 
+  // Success task
+  grunt.registerTask('success', function(){
+    grunt.log.writeln('Success');
+  });
+
+  // Failure task
+  grunt.registerTask('failure', function(){
+    grunt.log.writeln('Failure');
+  });
+
+  // Always task
+  grunt.registerTask('always', function(){
+    grunt.log.writeln('Always');
+  });
 
   // Load local tasks.
   grunt.loadTasks('tasks');
-  
-  // Load dependencies
+
+  // Load dependencies.
   grunt.loadNpmTasks('grunt-contrib-coffee');
-  
-  // sync task
-  grunt.registerTask('sync', 'testacularServer:sync watch')
+
   // Default task.
   grunt.registerTask('default', 'coffee watch');
-  
-  
-}
+};
