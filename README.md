@@ -73,6 +73,7 @@ testacularServer: {
 }
 ```
 
+
 ### `testacularRun`
 This task is the equivalent of running `testacular run <options>`.
 There is only one option available, that is `portRunner` that defines
@@ -85,6 +86,22 @@ testacularRun: {
   }
 }
 ```
+If you want to run tasks after the tests have finished you can do the
+following
+```javascript
+testacularRun: {
+  unit: {
+    runnerPort: 9101
+    options: {
+      success: 'successTask',
+      failure: failureTask',
+      always: alwaysTask'
+    }
+  }
+}
+```
+The `success` tasks will be run when the run was successful, `failure`
+if there was a failure and the `always` tasks are run every time.
 
 ## Release History
 * v0.3.0 - Use testacular@0.5.5 canary.
